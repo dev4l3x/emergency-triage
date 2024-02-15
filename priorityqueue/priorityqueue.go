@@ -32,31 +32,41 @@ func (queue PriorityQueue) Peek() (int, string) {
 	return queue.root.priority, queue.root.value
 }
 
-func (queue PriorityQueue) isEmpty() bool {
+func (queue PriorityQueue) IsEmpty() bool {
 	return queue.root == nil
 }
 
 func (queue *PriorityQueue) PopMax() (int, string) {
 
+	if (queue.IsEmpty()) {
+		return -1, ""
+	}
+
 	maxElement := queue.root
 	lastElement := getLastElement(queue.root)
 	
-	if lastElement == nil {
+	if lastElement == nil || lastElement == maxElement {
 		queue.root = nil
 		return maxElement.priority, maxElement.value
 	}
 
 	queue.root = lastElement
-	maxElement.childs[0].parent = lastElement
-	maxElement.childs[1].parent = lastElement
+	if maxElement.childs[0] != nil {
+		maxElement.childs[0].parent = lastElement
+	}
+	if maxElement.childs[1] != nil {
+		maxElement.childs[1].parent = lastElement
+	}
 
 	lastElement.childs = maxElement.childs
 
-	if lastElement.parent.childs[0] == lastElement {
-		lastElement.parent.childs[0] = nil
-	} else {
-		lastElement.parent.childs[1] = nil
-	}
+	if lastElement.parent != nil {
+		if lastElement.parent.childs[0] == lastElement {
+			lastElement.parent.childs[0] = nil
+		} else {
+			lastElement.parent.childs[1] = nil
+		}
+	}	
 
 	lastElement.parent = nil
 

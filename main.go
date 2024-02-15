@@ -8,16 +8,13 @@ import (
 func main() {
 	queue := priorityqueue.PriorityQueue{}
 
-	queue.Add(1, "Test")
-	queue.Add(2, "Test")
-	queue.Add(3, "Test")
-	queue.Add(4, "Test")
-	priorityqueue.PrintQueue(queue)
-	
-	maxPriority, maxValue := queue.PopMax()
-	fmt.Println("Max priority:", maxPriority, "Max value:", maxValue)
-	priorityqueue.PrintQueue(queue)
+	queue.Add(5, "John Doe")
+	queue.Add(8, "Jane Smith")
+	queue.Add(5, "Alice Johnson")
 
+	_, patient := queue.PopMax()
 	queue.PopMax()
-	priorityqueue.PrintQueue(queue)
+	queue.PopMax()
+	fmt.Println(patient)
+	fmt.Println(queue.IsEmpty())
 }
